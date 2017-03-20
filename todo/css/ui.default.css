@@ -1,0 +1,49 @@
+@charset "utf-8";
+
+/* ------------------------------------------------------------
+* Name      : common.css
+* Desc       : interest me POC / common Style Sheet
+* Created   : 2012-06-02 CJ E&M 
+------------------------------------------------------------ */
+
+body { margin:0; padding:0; font-family:'HelveticaNeue-Light','AppleSDGothicNeo-Light','Malgun Gothic','맑은 고딕',sans-serif; font-size:12px; -webkit-text-size-adjust:none; color:#666666; line-height:1.4; background:#ffffff; }
+fieldset { min-width:100%; }
+h1, h2, h3, h4, h5, h6, form, div, p, em, img, table, tr, td, fieldset, label, dl, dt, dd { padding:0; margin:0; border:0;}
+h1, h2, h3, h4, h5, h6 {font-size:100%; font-weight:normal;}
+hr {display: none;}
+label {vertical-align:middle;}
+em, i {font-style:normal; }
+ul, ol, li {padding:0; margin:0; list-style:none;}
+.skip, legend, caption, .blindTit {position:absolute; top:0; left:-100px; width:0; height:0; overflow:hidden; visibility:hidden; font-size:0; line-height:0;}
+img {vertical-align:top; border:none 0;}
+table {width:100%;border:0;border-collapse:collapse;border-spacing:0;empty-cells:show;}
+button {cursor:pointer;border:none;}
+
+a, a:link, a:active, a:visited {color:#666666; text-decoration:none; }
+/* a:hover {text-decoration:underline;} */
+.png24 { tmp:expression(setPNG24(this));}
+
+/* input */
+input.text {padding:4px 2px 2px 2px; height:15px; border:1px solid #ccc; font-family:'HelveticaNeue-Light','AppleSDGothicNeo-Light','Malgun Gothic','맑은 고딕',sans-serif; font-size:12px; color:#666666; vertical-align:middle;}
+input.radio, input.checkbox { width:13px; height:13px; margin:0 3px -2px 3px; padding:0; }
+textarea {padding:2px; border:1px solid #ccc; background:#fff; font-family:'HelveticaNeue-Light','AppleSDGothicNeo-Light','Malgun Gothic','맑은 고딕',sans-serif; font-size:12px; vertical-align:middle;}
+select {height:18px; border:1px solid #ccc; font-family:'HelveticaNeue-Light','AppleSDGothicNeo-Light','Malgun Gothic','맑은 고딕',sans-serif; font-size:12px; vertical-align:middle; }
+select {
+  text-overflow: ellipsis;
+  white-space: nowrap;}
+select:focus {outline-color: #c00;}
+input {font-family:'HelveticaNeue-Light','AppleSDGothicNeo-Light','Malgun Gothic','맑은 고딕',sans-serif; font-size:12px;}
+
+address{font-family:'HelveticaNeue-Light','AppleSDGothicNeo-Light','Malgun Gothic','맑은 고딕',sans-serif; font-style:normal;}
+
+article,aside,canvas,details,figcaption,figure, footer,header,hgroup,menu,nav,section,summary {display:block;}
+
+.img_valign {display:inline-block; margin-top:-1px; overflow:hidden; height:100%; vertical-align:middle;}
+
+
+
+/* common */
+.cboth:before, .cboth:after {content:"";display:table;}
+.cboth:after {clear:both;}
+.cboth {zoom:1;}
+* html .cboth {zoom:1;}
