@@ -15,8 +15,8 @@ todo.filter('checkedItems', function() {
 		return resultArr;
 	}
 })
-
-todo.controller('todoCtrl', function($scope, $http) {
+todo.constant('dataUrl','http://localhost:5500/todo/')
+todo.controller('todoCtrl', function($scope, $http, dataUrl) {
 	$scope.todo = model;
 
 	$scope.incompleteCount = function() {
@@ -35,7 +35,7 @@ todo.controller('todoCtrl', function($scope, $http) {
 		if ( actionText ) {
 			// $scope.todo.items.push({action:actionText, done:false})
 			
-			$http.post('http://10.202.66.33:5500/todo/',{
+			$http.post(dataUrl,{
 				action:actionText, done:false
 			})
 			.then(function onSuccess(response) {
@@ -51,7 +51,7 @@ todo.controller('todoCtrl', function($scope, $http) {
 	}
 
 	$scope.changeCompleted = function(todo) {
-		$http.post('http://10.202.66.33:5500/todo/'+todo.id,{
+		$http.put(dataUrl+todo.id,{
 			done:todo.done
 		})
 		.then(function onSuccess(response) {
@@ -61,9 +61,9 @@ todo.controller('todoCtrl', function($scope, $http) {
 	}
 
 	$scope.deleteCompleted = function(todo) {
-		$http.delete('http://10.202.66.33:5500/todo/'+todo.id)
+		$http.delete(dataUrl+todo.id)
 		.then(function onSuccess(response) {
-			var count ;
+			var count;
 			angular.forEach($scope.todo.items, function(item,i) {
 				if (item.id == todo.id) {
 					count = i;
@@ -71,11 +71,11 @@ todo.controller('todoCtrl', function($scope, $http) {
 			});
 			$scope.todo.items.splice(count,1);
 		},function onError(err) {
-			console.log(err.message);
+			console.log(err);
 		})
 	}
 
-	$http.get('http://10.202.66.33:5500/todo/')
+	$http.get(dataUrl)
 	.then(function onSuccess(response) {
 		$scope.todo.items = response.data;
 	},function onError(err) {
