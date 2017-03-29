@@ -31,8 +31,9 @@ todo.controller('todoCtrl', function($scope, $http, dataUrl) {
 
 	$scope.addNewItem = function(actionText) {
 		if ( actionText ) {
-			// $scope.todo.items.push({action:actionText, done:false});
-			$http.post(dataUrl, {
+			// $scope.todo.items.push({action:actionText, done:false})
+			
+			$http.post(dataUrl,{
 				action:actionText, done:false
 			})
 			.then(function onSuccess(response) {
@@ -46,8 +47,9 @@ todo.controller('todoCtrl', function($scope, $http, dataUrl) {
 		}
 	}
 
-	$scope.changeCompleted = function(todo){
-		$http.post(dataUrl + todo.id, {
+
+	$scope.changeCompleted = function(todo) {
+		$http.put(dataUrl+todo.id,{
 			done:todo.done
 		})
 		.then(function onSuccess(response) {
@@ -57,17 +59,16 @@ todo.controller('todoCtrl', function($scope, $http, dataUrl) {
 	}
 
 	$scope.deleteCompleted = function(todo) {
-		$http.delete(dataUrl + todo.id)
+		$http.delete(dataUrl+todo.id)
 		.then(function onSuccess(response) {
 			var count;
 			angular.forEach($scope.todo.items, function(item,i) {
 				if ( item.id == todo.id ) { count = i }
 			});
 			$scope.todo.items.splice(count,1);
-		},function onSuccess(err) {
-			console.log(err.statusText);
-		});
-		event.preventDefault();
+		},function onError(err) {
+			console.log(err);
+		})
 	}
 
 	$http.get(dataUrl)
