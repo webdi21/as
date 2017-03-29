@@ -1,29 +1,27 @@
-var model = {
-	user:'Adam'
-}
-
 var todo = angular.module('todoApp',[]);
 
-todo.filter('checkedItems', function() {
+todo.filter('checkedItems',function() {
 	return function(items, showComplete) {
 		var resultArr = [];
 		angular.forEach(items, function(item) {
-			if (item.done == false || showComplete == true) {
+			if ( item.done == false || showComplete == true ) {
 				resultArr.push(item);
 			}
-		})
+		});
 		return resultArr;
 	}
 })
-
-todo.controller('todoCtrl', function($scope, $http) {
-	$scope.todo = model;
+todo.constant('dataUrl','http://localhost:5500/todo/')
+todo.controller('todoCtrl', function($scope, $http, dataUrl) {
+	$scope.todo = {
+		user:'Adam'
+	};
 
 	$scope.incompleteCount = function() {
 		var count = 0;
 		angular.forEach($scope.todo.items, function(item) {
-			if (item.done == false) { count++ }
-		})
+			if ( item.done == false ) { count++ }
+		});
 		return count;
 	}
 
@@ -33,52 +31,49 @@ todo.controller('todoCtrl', function($scope, $http) {
 
 	$scope.addNewItem = function(actionText) {
 		if ( actionText ) {
-			// $scope.todo.items.push({action:actionText, done:false})
-			
-			$http.post('http://10.202.66.33:5500/todo/',{
+			// $scope.todo.items.push({action:actionText, done:false});
+			$http.post(dataUrl, {
 				action:actionText, done:false
 			})
 			.then(function onSuccess(response) {
 				$scope.todo.items.push(response.data);
-			},function onError(err) {
-				console.log(err.message);
-			})
-
-			$scope.actionText = '';
+				$scope.actionText = '';
+			},function onSuccess(err) {
+				console.log(err.statusText);
+			});
 		} else {
-			alert('제목을 입력하세요');
+			alert('할일 제목을 적어 주세요');
 		}
 	}
 
-	$scope.changeCompleted = function(todo) {
-		$http.post('http://10.202.66.33:5500/todo/'+todo.id,{
+	$scope.changeCompleted = function(todo){
+		$http.post(dataUrl + todo.id, {
 			done:todo.done
 		})
 		.then(function onSuccess(response) {
-		},function onError(err) {
-			console.log(err.message);
-		})
+		},function onSuccess(err) {
+			console.log(err.statusText);
+		});
 	}
 
 	$scope.deleteCompleted = function(todo) {
-		$http.delete('http://10.202.66.33:5500/todo/'+todo.id)
+		$http.delete(dataUrl + todo.id)
 		.then(function onSuccess(response) {
-			var count ;
+			var count;
 			angular.forEach($scope.todo.items, function(item,i) {
-				if (item.id == todo.id) {
-					count = i;
-				}
+				if ( item.id == todo.id ) { count = i }
 			});
 			$scope.todo.items.splice(count,1);
-		},function onError(err) {
-			console.log(err.message);
-		})
+		},function onSuccess(err) {
+			console.log(err.statusText);
+		});
+		event.preventDefault();
 	}
 
-	$http.get('http://10.202.66.33:5500/todo/')
+	$http.get(dataUrl)
 	.then(function onSuccess(response) {
 		$scope.todo.items = response.data;
-	},function onError(err) {
-		console.log(err.message);
-	})
-})
+	},function onSuccess(err) {
+		console.log(err.statusText);
+	});
+});
